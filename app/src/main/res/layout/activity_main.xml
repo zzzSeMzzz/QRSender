@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bckg"
+    android:padding="@dimen/activity_vertical_margin"
+    tools:context="ru.sem.qrsender.ui.MainActivity"
+    android:id="@+id/mainView">
+
+
+    <ProgressBar
+        android:id="@+id/progressBar2"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="48dp"
+        android:layout_height="52dp"
+        android:visibility="invisible"
+        tools:layout_constraintTop_creator="1"
+        android:layout_marginStart="8dp"
+        tools:layout_constraintLeft_creator="1"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="16dp" />
+
+    <ScrollView
+        android:id="@+id/scrollView2"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0"
+        tools:layout_constraintBottom_creator="1"
+        tools:layout_constraintLeft_creator="1"
+        tools:layout_constraintRight_creator="1"
+        tools:layout_constraintTop_creator="1">>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+
+            <TextView
+                android:textColor="#fff"
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/auth"
+                android:textSize="22sp"
+                android:textStyle="bold" />
+
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/tiLogin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                android:padding="4dp">
+
+                <EditText
+                    android:background="@drawable/standard_edit_text"
+                    android:drawableLeft="@drawable/ic_user"
+                    android:drawableStart="@drawable/ic_user"
+                    android:id="@+id/edLogin"
+                    android:layout_width="match_parent"
+                    android:layout_height="46dp"
+                    android:drawablePadding="8dp"
+                    android:ems="10"
+                    android:hint="@string/login"
+                    android:inputType="textPersonName"
+                    android:lines="1" />
+
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/tiPass"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                android:padding="4dp"
+                app:passwordToggleEnabled="true">
+
+
+                <EditText
+                    android:background="@drawable/standard_edit_text"
+                    android:drawableLeft="@drawable/ic_security_open"
+                    android:drawableStart="@drawable/ic_security_open"
+                    android:id="@+id/edPassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="46dp"
+                    android:drawablePadding="8dp"
+                    android:ems="10"
+                    android:hint="@string/password"
+                    android:inputType="textPassword"
+                    android:lines="1" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <Button
+                android:textColor="#fff"
+                android:background="@drawable/standard_button"
+                android:id="@+id/btnLogin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/sign_in" />
+        </LinearLayout>
+    </ScrollView>
+
+</android.support.constraint.ConstraintLayout>

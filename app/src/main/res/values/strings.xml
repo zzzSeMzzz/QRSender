@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">QrSender</string>
+    <string name="auth">Авторизация</string>
+    <string name="login">Логин</string>
+    <string name="password">Пароль</string>
+    <string name="sign_in">Войти</string>
+    <string name="action_settings">Найстройки</string>
+</resources>

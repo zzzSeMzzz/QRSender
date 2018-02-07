@@ -1,0 +1,9 @@
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="btn_hor_padding">14dp</dimen>
+    <dimen name="btn_ver_padding">10dp</dimen>
+    <dimen name="btn_corners">30dp</dimen>
+    <dimen name="btn_stroke">2dp</dimen>
+</resources>
