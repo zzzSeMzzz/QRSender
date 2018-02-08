@@ -51,8 +51,7 @@ public class MainActivity extends MvpAppCompatActivity implements MainView,
     private static final int PERM_ALL=7;
 
     private boolean validCred(){
-        return (!edLogin.getText().toString().isEmpty()
-                && !edPassword.getText().toString().isEmpty());
+        return (!edLogin.getText().toString().isEmpty());
     }
 
     @Override
@@ -62,6 +61,9 @@ public class MainActivity extends MvpAppCompatActivity implements MainView,
         ButterKnife.bind(this);
         permissionHelper = new PermissionHelper(this,
                 findViewById(R.id.mainView), this);
+        SharedPreferences preferences = getSharedPreferences("conf", Context.MODE_PRIVATE);
+        edLogin.setText(preferences.getString("login", ""));
+        edPassword.setText(preferences.getString("pass",""));
     }
 
     @Override
@@ -101,6 +103,12 @@ public class MainActivity extends MvpAppCompatActivity implements MainView,
         progressBar.setVisibility(show ? View.VISIBLE : View.GONE);
     }
 
+    private boolean isServerCredEmpty(){
+        SharedPreferences preferences = getSharedPreferences("conf", Context.MODE_PRIVATE);
+        return (preferences.getString("url","").isEmpty()||
+                preferences.getString("port","").isEmpty());
+    }
+
     @Override
     public void onPermissionsResult(int requestCode, boolean isGranted) {
         switch (requestCode) {
@@ -111,6 +119,10 @@ public class MainActivity extends MvpAppCompatActivity implements MainView,
                         InputMethodManager imm = (InputMethodManager)
                                 getSystemService(Context.INPUT_METHOD_SERVICE);
                         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+                    }
+                    if(isServerCredEmpty()){
+                        showError("Необходимо заполинть данные сервера");
+                        return;
                     }
                     presenter.login(edLogin.getText().toString(), edPassword.getText().toString());
                 } else {
@@ -137,6 +149,10 @@ public class MainActivity extends MvpAppCompatActivity implements MainView,
             Toast.makeText(this, "Заполните все поля", Toast.LENGTH_SHORT).show();
             return;
         }
+        getSharedPreferences("conf", Context.MODE_PRIVATE)
+                .edit().putString("login", edLogin.getText().toString())
+                .putString("pass", edPassword.getText().toString())
+                .apply();
         permissionHelper.requestPermissions(perm, PERM_ALL,
                 "Для работы приложения необходимы следующие разрешения");
     }
@@ -147,8 +163,8 @@ public class MainActivity extends MvpAppCompatActivity implements MainView,
         final View deleteDialogView = factory.inflate(R.layout.dialog_settings, null);
         EditText edHost = deleteDialogView.findViewById(R.id.edHost);
         EditText edPort = deleteDialogView.findViewById(R.id.edPort);
-        edHost.setText(preferences.getString("url","http://89.169.192.8"));
-        edPort.setText(preferences.getString("port","7999"));
+        edHost.setText(preferences.getString("url",""));//http://89.169.192.8
+        edPort.setText(preferences.getString("port",""));//7999
         final AlertDialog deleteDialog =
                 new AlertDialog.Builder(this)
                 .setPositiveButton("ok", (dialogInterface, i) -> {

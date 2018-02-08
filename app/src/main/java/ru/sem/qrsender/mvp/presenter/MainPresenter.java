@@ -26,14 +26,22 @@ public class MainPresenter extends BasePresenter<MainView> {
     private static final String TAG = "MainPresenter";
 
     public MainPresenter(){
-        Context context = App.getInstance().getApplicationContext();
-        SharedPreferences preferences = context.getSharedPreferences("conf", Context.MODE_PRIVATE);
-        url = preferences.getString("url","http://89.169.192.8")+":"
-                +preferences.getString("port","7999");
-        service = App.getInstance().getServiceGenereator(url).getMainService();
     }
 
     public void login(String login, String password){
+        Context context = App.getInstance().getApplicationContext();
+        SharedPreferences preferences = context.getSharedPreferences("conf", Context.MODE_PRIVATE);
+        url ="http://" + preferences.getString("url","")+":"
+                +preferences.getString("port","");
+        try {
+            service = App.getInstance().getServiceGenereator(url).getMainService();
+        }catch (Exception e){
+            e.printStackTrace();
+            getViewState().showError(e.getMessage());
+            return;
+        }
+
+        getViewState().showProgress(true);
         String hash = HashUtil.MD5(login+"."+password);
         Log.d(TAG, "login: hash="+hash);
         Disposable d = service.login(hash)

@@ -7,8 +7,9 @@
     android:background="@android:color/black"
     tools:context="ru.sem.qrsender.ui.ScanActivity">
 
-    <SurfaceView
-        android:id="@+id/surfaceView"
+
+    <com.dlazaro66.qrcodereaderview.QRCodeReaderView
+        android:id="@+id/qrdecoderview"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginBottom="16dp"
@@ -37,7 +38,7 @@
         android:layout_marginTop="8dp"
         android:text="Отправлено: "
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/surfaceView"
+        app:layout_constraintTop_toBottomOf="@+id/qrdecoderview"
         android:layout_marginLeft="8dp" />
 
     <TextView

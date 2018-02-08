@@ -39,4 +39,16 @@ public class QRContainer {
     public int getCountQue(){
         return qrs.size();
     }
+
+    public String getFirst(){
+        return qrs.getFirst();
+    }
+
+    public String getLast(){
+        return qrs.getLast();
+    }
+
+    public ArrayDeque<String> getQrs() {
+        return qrs;
+    }
 }

@@ -72,5 +72,9 @@ dependencies {
     annotationProcessor "com.arello-mobile:moxy-compiler:$Moxy"
     implementation "com.arello-mobile:moxy-android:$Moxy"
 
-    implementation "com.github.nisrulz:qreader:$QRReader"
+    //implementation "com.github.nisrulz:qreader:$QRReader"
+
+    implementation ('com.dlazaro66.qrcodereaderview:qrcodereaderview:2.0.3@aar'){
+        transitive = true
+    }
 }

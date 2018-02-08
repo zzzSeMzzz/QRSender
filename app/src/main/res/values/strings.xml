@@ -5,4 +5,5 @@
     <string name="password">Пароль</string>
     <string name="sign_in">Войти</string>
     <string name="action_settings">Найстройки</string>
+    <string name="send_que">Отправить очередь</string>
 </resources>

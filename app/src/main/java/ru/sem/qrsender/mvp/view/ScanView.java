@@ -12,4 +12,8 @@ public interface ScanView extends MvpView {
     void showError(String text);
 
     void setInfo(int sendCount, int wait);
+
+    void initQR();
+
+    void setMenuEnabled(boolean enabled);
 }
