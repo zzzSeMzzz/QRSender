@@ -16,4 +16,6 @@ public interface ScanView extends MvpView {
     void initQR();
 
     void setMenuEnabled(boolean enabled);
+
+    void setResponse(String response);
 }

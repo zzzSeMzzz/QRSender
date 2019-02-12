@@ -31,6 +31,8 @@ public class ScanActivity extends MvpAppCompatActivity implements ScanView{
     TextView tvSend;
     @BindView(R.id.tvWait)
     TextView tvWait;
+    @BindView(R.id.textResponse)
+    TextView textResponse;
 
     private String hash;
     @BindView(R.id.qrdecoderview)
@@ -63,8 +65,9 @@ public class ScanActivity extends MvpAppCompatActivity implements ScanView{
 
     @Override
     public void initQR(){
+        Log.d(TAG, "initQR: initialization");
         qrCodeReaderView.setOnQRCodeReadListener((text, points) -> {
-            Log.d(TAG, "onQRCodeRead: "+text);
+            //Log.d(TAG, "onQRCodeRead: "+text);
             qrCodeReaderView.stopCamera();
             Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
             v.vibrate(500);
@@ -87,6 +90,7 @@ public class ScanActivity extends MvpAppCompatActivity implements ScanView{
     @Override
     protected void onResume() {
         super.onResume();
+        qrCodeReaderView.setQRDecodingEnabled(true);
         qrCodeReaderView.startCamera();
     }
 
@@ -131,9 +135,23 @@ public class ScanActivity extends MvpAppCompatActivity implements ScanView{
         tvWait.setText("В очереди: "+wait);
     }
 
-    @OnClick(R.id.btnScan)
+    @OnClick({R.id.btnScan, R.id.textResponse})
     public void onClickScan(View v){
+        //qrCodeReaderView.setAutofocusInterval(2000L);
+        //qrCodeReaderView.setQRDecodingEnabled(false);
         qrCodeReaderView.setQRDecodingEnabled(true);
         qrCodeReaderView.startCamera();
+
+        presenter.getViewState().setResponse("");
+    }
+
+    @Override
+    public void setResponse(String response) {
+        if(response==null||response.isEmpty()){
+            textResponse.setVisibility(View.GONE);
+        }else{
+            textResponse.setVisibility(View.VISIBLE);
+            textResponse.setText(response);
+        }
     }
 }

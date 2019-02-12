@@ -51,7 +51,7 @@ public class ScanPresenter extends BasePresenter<ScanView> {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(response -> {
                             String body = response.body().string();
-                            if(body.equals("1")) {
+                            /*if(body.equals("1")) {
                                 Log.d(TAG, "success send qr="+body);
                                 qrContainer.incSendCount();
                                 getViewState().setInfo(qrContainer.getSendCount(), qrContainer.getCountQue());
@@ -60,7 +60,10 @@ public class ScanPresenter extends BasePresenter<ScanView> {
                                 Log.e(TAG, "failure send qr="+body);
                                 qrContainer.addFirst(qr);
                                 getViewState().setInfo(qrContainer.getSendCount(), qrContainer.getCountQue());
-                            }
+                            }*/
+                            qrContainer.incSendCount();
+                            getViewState().setInfo(qrContainer.getSendCount(), qrContainer.getCountQue());
+                            getViewState().setResponse(body);
                         },
                         error -> {
                             Log.e(TAG, "auth: failed auth");
