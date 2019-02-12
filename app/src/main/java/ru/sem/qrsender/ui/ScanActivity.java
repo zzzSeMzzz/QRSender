@@ -14,7 +14,12 @@ import android.widget.Toast;
 import com.arellomobile.mvp.MvpAppCompatActivity;
 import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.arellomobile.mvp.presenter.ProvidePresenter;
-import com.dlazaro66.qrcodereaderview.QRCodeReaderView;
+import com.google.zxing.ResultPoint;
+import com.journeyapps.barcodescanner.BarcodeCallback;
+import com.journeyapps.barcodescanner.BarcodeResult;
+import com.journeyapps.barcodescanner.DecoratedBarcodeView;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -35,13 +40,14 @@ public class ScanActivity extends MvpAppCompatActivity implements ScanView{
     TextView textResponse;
 
     private String hash;
-    @BindView(R.id.qrdecoderview)
-    QRCodeReaderView qrCodeReaderView;
 
     @InjectPresenter
     ScanPresenter presenter;
 
     private MenuItem sendQrMenuItem;
+
+    @BindView(R.id.dbv_barcode)
+    DecoratedBarcodeView dbvScanner;
 
     @ProvidePresenter
     ScanPresenter provideScanPresenter () {
@@ -66,7 +72,7 @@ public class ScanActivity extends MvpAppCompatActivity implements ScanView{
     @Override
     public void initQR(){
         Log.d(TAG, "initQR: initialization");
-        qrCodeReaderView.setOnQRCodeReadListener((text, points) -> {
+        /*qrCodeReaderView.setOnQRCodeReadListener((text, points) -> {
             //Log.d(TAG, "onQRCodeRead: "+text);
             qrCodeReaderView.stopCamera();
             Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
@@ -84,20 +90,48 @@ public class ScanActivity extends MvpAppCompatActivity implements ScanView{
         // Use this function to set front camera preview
         //qrCodeReaderView.setFrontCamera();
         // Use this function to set back camera preview
-        qrCodeReaderView.setBackCamera();
+        qrCodeReaderView.setBackCamera();*/
+
+        dbvScanner.decodeContinuous(new BarcodeCallback() {
+            @Override
+            public void barcodeResult(BarcodeResult result) {
+                Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+                v.vibrate(500);
+                String code = result.getText();
+                Log.d(TAG, "barcodeResult: "+code);
+                pauseScanner();
+                presenter.sendQR(code);
+            }
+
+            @Override
+            public void possibleResultPoints(List<ResultPoint> resultPoints) {
+
+            }
+        });
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        qrCodeReaderView.setQRDecodingEnabled(true);
-        qrCodeReaderView.startCamera();
+        resumeScanner();
     }
+
+    protected void resumeScanner() {
+        //isScanDone = false;
+        if (!dbvScanner.isActivated())
+            dbvScanner.resume();
+        Log.d(TAG, "paused: false");
+    }
+
+    protected void pauseScanner() {
+        dbvScanner.pause();
+    }
+
 
     @Override
     protected void onPause() {
         super.onPause();
-        qrCodeReaderView.stopCamera();
+        pauseScanner();
     }
 
     @Override
@@ -137,11 +171,10 @@ public class ScanActivity extends MvpAppCompatActivity implements ScanView{
 
     @OnClick({R.id.btnScan, R.id.textResponse})
     public void onClickScan(View v){
-        //qrCodeReaderView.setAutofocusInterval(2000L);
-        //qrCodeReaderView.setQRDecodingEnabled(false);
-        qrCodeReaderView.setQRDecodingEnabled(true);
-        qrCodeReaderView.startCamera();
+        /*qrCodeReaderView.setQRDecodingEnabled(true);
+        qrCodeReaderView.startCamera();*/
 
+        resumeScanner();
         presenter.getViewState().setResponse("");
     }
 

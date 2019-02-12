@@ -75,7 +75,10 @@ dependencies {
 
     //implementation "com.github.nisrulz:qreader:$QRReader"
 
-    implementation ('com.dlazaro66.qrcodereaderview:qrcodereaderview:2.0.3@aar'){
+    /*implementation ('com.dlazaro66.qrcodereaderview:qrcodereaderview:2.0.3@aar'){
         transitive = true
-    }
+    }*/
+
+    implementation 'com.journeyapps:zxing-android-embedded:3.6.0'
+    implementation 'com.google.zxing:core:3.3.0'
 }
